@@ -1,0 +1,7 @@
+streamlit 
+pinecone-client
+pinecone-datasets
+loguru
+pyarrow
+pandas
+datasets
