@@ -45,11 +45,25 @@ def inference(user_messages: list[dict[str, str]]) -> str:
   "grammar": "",
   "n_probs": 0,
   "prompt": json.dumps(user_messages)
-}
-    response = requests.post(url=URL, json=body, headers=HEADERS)
-    logger.info(response)
-    return response
+    }
+    try:
+        response = requests.post(url=URL, json=body, headers=HEADERS)
+        response.raise_for_status()
+        for line in response.iter_lines():
+            if line:
+                decoded_line = line.decode('utf-8')
+            if decoded_line.startswith('data:'):
+                json_data = json.loads(decoded_line[len('data: '):])
+
+            # Debugging lines
+            logger.debug(f"Status code: {json_data}")
+            logger.debug(f"Raw response: {response.content}")
+
+            return json.response
+         
+    except requests.JSONDecodeError:
+        logger.error("Failed to decode JSON response")
+        return logger.error(f"Request failed: {e}")
 
 if __name__ == "__main__":
     response = inference([{"role":"system", "content": "you're a friendly and helpful chat bot"}, {"role":"user", "content": "hi there how are you?", "role": "llama", "content": ""}])
-    print(response.content)
