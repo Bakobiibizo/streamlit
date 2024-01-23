@@ -7,7 +7,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-streamlit = "^1.28.0"
+streamlit = "^1.30.0"
 pinecone-client = {extras = ["grpc"], version = "^2.2.4"}
 pinecone-datasets = "^0.6.2"
 loguru = "^0.7.2"
